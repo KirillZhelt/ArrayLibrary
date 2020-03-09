@@ -10,6 +10,12 @@ arrayLibES5.skip = function(array, n) {
   return array.slice(n, array.length);
 };
 
+arrayLibES5.foreach = function(array, callback) {
+    for (var i = 0; i < array.length; i++) {
+      callback(array[i]);
+    }
+};
+
 arrayLibES5.map = function(array, callback) {
   var resultArray = []; 
   this.foreach(array, function(item) {
@@ -36,8 +42,10 @@ arrayLibES5.filter = function(array, callback) {
   return resultArray;
 };
 
-arrayLibES5.foreach = function(array, callback) {
-  for (var i = 0; i < array.length; i++) {
-    callback(array[i]);
-  }
-};
+arrayLibES5.chain = function(array) {
+  
+}
+
+arrayLibES5.value = function() {
+  
+}
