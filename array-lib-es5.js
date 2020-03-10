@@ -18,7 +18,7 @@ arrayLibES5.foreach = function(array, callback) {
 
 arrayLibES5.map = function(array, callback) {
   var resultArray = []; 
-  this.foreach(array, function(item) {
+  arrayLibES5.foreach(array, function(item) {
     resultArray.push(callback(item));
   });
   return resultArray;
@@ -26,7 +26,7 @@ arrayLibES5.map = function(array, callback) {
 
 arrayLibES5.reduce = function(array, callback, initialValue) {
   var resultValue = initialValue;
-  this.foreach(array, function(item) {
+  arrayLibES5.foreach(array, function(item) {
     resultValue = callback(resultValue, item);
   });
   return resultValue;
@@ -34,7 +34,7 @@ arrayLibES5.reduce = function(array, callback, initialValue) {
 
 arrayLibES5.filter = function(array, callback) {
   var resultArray = [];
-  this.foreach(array, function(item) {
+  arrayLibES5.foreach(array, function(item) {
     if (callback(item)) {
       resultArray.push(item);
     }
@@ -43,9 +43,40 @@ arrayLibES5.filter = function(array, callback) {
 };
 
 arrayLibES5.chain = function(array) {
-  
-}
+  var chainArray = {
+    take(n) {
+      array = arrayLibES5.take(array, n);
+      return this;
+    },
+    
+    skip(n) {
+      array = arrayLibES5.skip(array, n);
+      return this; 
+    },
 
-arrayLibES5.value = function() {
-  
-}
+    map(callback) {
+      array = arrayLibES5.map(array, callback);
+      return this;
+    },
+   
+    filter(callback) {
+      array = arrayLibES5.filter(array, callback);
+      return this;
+    },
+
+    foreach(callback) {
+        arrayLibES5.foreach(array, callback);
+        return this;
+    },
+
+    reduce(callback, initialValue) {
+      return arrayLibES5.reduce(array, callback, initialValue);
+    },
+
+    value() {
+      return array;
+    }
+  }
+
+  return chainArray;
+};
