@@ -1,95 +1,103 @@
 'use strict'
 
-const arrayLibES6 = {};
+class ArrayLibES6 {
 
-arrayLibES6.take = (array, n) => array.slice(0, n);
-
-arrayLibES6.skip = (array, n) => array.slice(n, array.length);
-
-arrayLibES6.foreach = (array, callback) => {
-  for (let i = 0; i < array.length; i++) {
-    callback(array[i]);
+  take(array, n) {
+    return array.slice(0, n);
   }
-};
 
-arrayLibES6.map = (array, callback) => {
-  const resultArray = []; 
-  arrayLibES6.foreach(array, item => {
-      resultArray.push(callback(item))
-  });
-  return resultArray;
-};
+  skip(array, n) {
+    return array.slice(n, array.length);
+  }
 
-arrayLibES6.reduce = (array, callback, initialValue) => {
-  let resultValue = initialValue;
-  arrayLibES6.foreach(array, (item) => {
-    resultValue = callback(resultValue, item);
-  });
-  return resultValue;
-};
-
-arrayLibES6.filter = (array, callback) => {
-  const resultArray = [];
-  arrayLibES6.foreach(array, item => {
-    if (callback(item)) {
-      resultArray.push(item);
+  foreach(array, callback) {
+    for (let i = 0; i < array.length; i++) {
+      callback(array[i]);
     }
-  });
-  return resultArray;
-};
+  }
 
-arrayLibES6.chain = array => {
-  return {
-    take(n) {
-      array = arrayLibES6.take(array, n);
-      return this;
-    },
-    
-    skip(n) {
-      array = arrayLibES6.skip(array, n);
-      return this; 
-    },
+  map(array, callback) {
+    const resultArray = []; 
+    this.foreach(array, item => {
+        resultArray.push(callback(item))
+    });
+    return resultArray;
+  }
 
-    map(callback) {
-      array = arrayLibES6.map(array, callback);
-      return this;
-    },
-   
-    filter(callback) {
-      array = arrayLibES6.filter(array, callback);
-      return this;
-    },
+  reduce(array, callback, initialValue) {
+    let resultValue = initialValue;
+    this.foreach(array, (item) => {
+      resultValue = callback(resultValue, item);
+    });
+    return resultValue;
+  }
 
-    foreach(callback) {
-        arrayLibES6.foreach(array, callback);
+  filter(array, callback) {
+    const resultArray = [];
+    this.foreach(array, item => {
+      if (callback(item)) {
+        resultArray.push(item);
+      }
+    });
+    return resultArray;
+  }
+
+  chain(array) {
+    const lib = this;
+    return {
+      take(n) {
+        array = lib.take(array, n);
         return this;
-    },
-
-    reduce(callback, initialValue) {
-      return arrayLibES6.reduce(array, callback, initialValue);
-    },
-
-    value() {
-      return array;
+      },
+        
+      skip(n) {
+        array = lib.skip(array, n);
+        return this; 
+      },
+  
+      map(callback) {
+        array = lib.map(array, callback);
+        return this;
+      },
+     
+      filter(callback) {
+        array = lib.filter(array, callback);
+        return this;
+      },
+  
+      foreach(callback) {
+        lib.foreach(array, callback);
+          return this;
+      },
+  
+      reduce(callback, initialValue) {
+        return lib.reduce(array, callback, initialValue);
+      },
+  
+      value() {
+        return array;
+      }
     }
   }
-};
 
-arrayLibES6.sum = memo(array => arrayLibES6.reduce(array, (total, item) => total + item, 0));
+  sum = ArrayLibES6.memo(array => this.reduce(array, (total, item) => total + item, 0));
 
-function memo(func) {
-  const memorized = {};
-  return function(...args) {
-    const key = JSON.stringify(args);
-    if (key in memorized) {
-      const value = memorized[key];
-      console.log(`Value for ${args} was memorized: ${value}`);
-      return value;
-    } else {
-      const value = func(...args);
-      console.log(`Computed value for ${args} is: ${value}`)
-      memorized[key] = value;
-      return value;
-    }
-  };
+  static memo(func) {
+    const memorized = {};
+    return function(...args) {
+      const key = JSON.stringify(args);
+      if (key in memorized) {
+        const value = memorized[key];
+        console.log(`Value for ${args} was memorized: ${value}`);
+        return value;
+      } else {
+        const value = func(...args);
+        console.log(`Computed value for ${args} is: ${value}`)
+        memorized[key] = value;
+        return value;
+      }
+    };
+  }
 }
+
+const arrayLibES6 = new ArrayLibES6();
