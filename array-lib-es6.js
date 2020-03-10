@@ -39,7 +39,7 @@ arrayLibES6.filter = (array, callback) => {
 };
 
 arrayLibES6.chain = array => {
-  const chainArray = {
+  return {
     take(n) {
       array = arrayLibES6.take(array, n);
       return this;
@@ -73,6 +73,23 @@ arrayLibES6.chain = array => {
       return array;
     }
   }
-
-  return chainArray;
 };
+
+arrayLibES6.sum = memo(array => arrayLibES6.reduce(array, (total, item) => total + item, 0));
+
+function memo(func) {
+  const memorized = {};
+  return function(...args) {
+    const key = JSON.stringify(args);
+    if (key in memorized) {
+      const value = memorized[key];
+      console.log(`Value for ${args} was memorized: ${value}`);
+      return value;
+    } else {
+      const value = func(...args);
+      console.log(`Computed value for ${args} is: ${value}`)
+      memorized[key] = value;
+      return value;
+    }
+  };
+}
