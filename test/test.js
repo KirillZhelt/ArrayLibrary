@@ -49,8 +49,20 @@ describe('ArrayLibrary tests', () => {
     });
   });
   describe('#chain(array)', () => {
-    it('take 2 elements that skip one', () => {
+    it('take 2 elements than skip one', () => {
       assert.deepEqual(arrayLibES6.chain([1, 2, 3]).take(2).skip(1).value(), [2]);
+    });
+    it('map to squared elements, than filter even and take 2 elements', () => {
+      assert.deepEqual(arrayLibES6.chain([1, 2, 3, 4, 5, 6, 7, 8])
+        .map(x => x ** 2)
+        .filter(x => x % 2 == 0)
+        .take(2)
+        .value(), [4, 16]);
+    });
+    it('filter eneven elements, than multiply them using reduce', () => {
+      assert.equal(arrayLibES6.chain([1, 2, 3, 4, 5, 6])
+        .filter(x => x % 2 != 0)
+        .reduce((a, b) => a * b, 1), 15);
     });
   });
   describe('#sum(array)', () => {

@@ -67,7 +67,7 @@ class ArrayLibES6 {
   
       foreach(callback) {
         lib.foreach(array, callback);
-          return this;
+        return this;
       },
   
       reduce(callback, initialValue) {
