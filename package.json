@@ -1,0 +1,21 @@
+{
+  "name": "array-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KirillZhelt/ArrayLibrary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KirillZhelt/ArrayLibrary/issues"
+  },
+  "homepage": "https://github.com/KirillZhelt/ArrayLibrary#readme"
+}

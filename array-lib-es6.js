@@ -23,7 +23,7 @@ class ArrayLibES6 {
     });
     return resultArray;
   }
-
+ 
   reduce(array, callback, initialValue) {
     let resultValue = initialValue;
     this.foreach(array, (item) => {
@@ -67,7 +67,7 @@ class ArrayLibES6 {
   
       foreach(callback) {
         lib.foreach(array, callback);
-          return this;
+        return this;
       },
   
       reduce(callback, initialValue) {
@@ -100,4 +100,4 @@ class ArrayLibES6 {
   }
 }
 
-const arrayLibES6 = new ArrayLibES6();
+export const arrayLibES6 = new ArrayLibES6();
